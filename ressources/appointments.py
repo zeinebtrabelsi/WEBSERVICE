@@ -5,7 +5,7 @@ from db import db
 from models import AppointmentModel, VaccineModel, PatientModel
 from schemas import AppointmentSchema, AppointmentUpdateSchema
 from flask import request
-
+from flask_jwt_extended import jwt_required
 from sqlalchemy.exc import SQLAlchemyError
 
 blp = Blueprint("appointments", __name__, description="Operations on appointments")
@@ -14,6 +14,7 @@ blp = Blueprint("appointments", __name__, description="Operations on appointment
 @blp.route("/appointments")
 class AppointmentList(MethodView):
     # GET method to retrieve all appointments
+    @jwt_required()
     @blp.response(200, AppointmentSchema(many=True))
     def get(self):
         return AppointmentModel.query.all()
@@ -68,6 +69,7 @@ class AppointmentList(MethodView):
 @blp.route("/appointments/<string:appointment_id>")
 class Appointment(MethodView):
     # GET method to retrieve an appointment by appointment ID
+    @jwt_required()
     @blp.response(200, AppointmentSchema)
     def get(self, appointment_id):
         appointment = AppointmentModel.query.get(appointment_id)

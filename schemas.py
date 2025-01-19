@@ -34,3 +34,8 @@ class VaccineSchema(Schema):
     manufacturer = fields.Str()  # Field for manufacturer
     side_effects = fields.Str()  # Field for side effects
     recommended_age_group = fields.Str()  # Field for age group
+    
+class UserSchema(Schema):
+    id = fields.Int(dump_only=True)
+    username = fields.Str(required=True)
+    password = fields.Str(required=True, load_only=True)

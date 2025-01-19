@@ -5,6 +5,7 @@ from db import db
 from models import PatientModel
 from schemas import PatientSchema
 from sqlalchemy.exc import SQLAlchemyError
+from flask_jwt_extended import jwt_required
 
 # Blueprint for patients
 blp = Blueprint("patients", __name__, description="Operations on patients")
@@ -13,6 +14,7 @@ blp = Blueprint("patients", __name__, description="Operations on patients")
 @blp.route("/patient")
 class PatientList(MethodView):
     # GET method to retrieve all patients
+    @jwt_required()
     @blp.response(200, PatientSchema(many=True))  # Serialize response
     def get(self):
         return PatientModel.query.all()
@@ -40,6 +42,7 @@ class PatientList(MethodView):
 @blp.route("/patient/<string:patient_id>")
 class Patient(MethodView):
     # GET method to retrieve a specific patient by ID
+    @jwt_required()
     @blp.response(200, PatientSchema)  # Serialize response
     def get(self, patient_id):
         patient = PatientModel.query.get(patient_id)
