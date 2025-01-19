@@ -11,7 +11,6 @@ class AppointmentModel(db.Model):
     status = db.Column(db.String(80), default="scheduled")
     date = db.Column(db.Date, nullable=False)
 
-    # Relationships
     patient = db.relationship("PatientModel", back_populates="appointments")
     vaccine = db.relationship("VaccineModel", back_populates="appointments")
 

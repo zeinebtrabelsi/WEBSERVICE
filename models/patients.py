@@ -8,5 +8,5 @@ class PatientModel(db.Model):
     patient_name = db.Column(db.String(80), nullable=False)
     contact_info = db.Column(db.String(80), nullable=False)
 
-    # One-to-Many relationship with AppointmentModel
+    
     appointments = db.relationship("AppointmentModel", back_populates="patient", lazy="dynamic")

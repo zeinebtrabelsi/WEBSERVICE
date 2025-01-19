@@ -12,20 +12,20 @@ blp = Blueprint("vaccines", __name__, description="Operations on vaccines")
 @blp.route("/vaccine")
 class VaccineList(MethodView):
     # GET method to retrieve all vaccines
-    @blp.response(200, VaccineSchema(many=True))  # Serialize response
+    @blp.response(200, VaccineSchema(many=True))  
     def get(self):
         return VaccineModel.query.all()
 
     # POST method to create a new vaccine
-    @blp.arguments(VaccineSchema)  # Parse and validate the request body
+    @blp.arguments(VaccineSchema)  
     @blp.response(201, VaccineSchema) 
     def post(self, vaccine_data):
-        # Check if the vaccine already exists
+        
         existing_vaccine = VaccineModel.query.filter_by(vaccine_name=vaccine_data["vaccine_name"]).first()
         if existing_vaccine:
             abort(400, message="Vaccine already exists.")
 
-        # Create a new vaccine with a unique ID
+        
         vaccine = VaccineModel(**vaccine_data)
         try:
             db.session.add(vaccine)
@@ -37,7 +37,7 @@ class VaccineList(MethodView):
 @blp.route("/vaccine/<string:vaccine_id>")
 class Vaccine(MethodView):
     # GET method to retrieve a specific vaccine by ID
-    @blp.response(200, VaccineSchema)  # Serialize response
+    @blp.response(200, VaccineSchema)  
     def get(self, vaccine_id):
         vaccine = VaccineModel.query.get(vaccine_id)
         if not vaccine:

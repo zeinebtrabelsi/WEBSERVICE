@@ -10,7 +10,7 @@ from sqlalchemy.exc import SQLAlchemyError
 
 blp = Blueprint("appointments", __name__, description="Operations on appointments")
 
-# Class-based view to handle all appointments
+
 @blp.route("/appointments")
 class AppointmentList(MethodView):
     # GET method to retrieve all appointments
@@ -23,11 +23,11 @@ class AppointmentList(MethodView):
     @blp.arguments(AppointmentSchema)
     @blp.response(201, AppointmentSchema)
     def post(self, appointment_data):
-        # check if the vaccine exists
+        
         vaccine = VaccineModel.query.get(appointment_data["vaccine_id"])
         if not vaccine:
             abort(404, message="Vaccine not found.")
-        # check if the patient already exists
+        
         patient = PatientModel.query.filter_by(contact_info=appointment_data["contact_info"]).first()
         if not patient:
             patient_data = {
@@ -68,7 +68,6 @@ class AppointmentList(MethodView):
 
 @blp.route("/appointments/<string:appointment_id>")
 class Appointment(MethodView):
-    # GET method to retrieve an appointment by appointment ID
     @jwt_required()
     @blp.response(200, AppointmentSchema)
     def get(self, appointment_id):

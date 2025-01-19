@@ -29,11 +29,11 @@ class PatientSchema(Schema):
 
 
 class VaccineSchema(Schema):
-    id = fields.Int(dump_only=True)  # Field for the vaccine's unique ID
-    vaccine_name = fields.Str(required=True)  # Field for the vaccine name
-    manufacturer = fields.Str()  # Field for manufacturer
-    side_effects = fields.Str()  # Field for side effects
-    recommended_age_group = fields.Str()  # Field for age group
+    id = fields.Int(dump_only=True)  
+    vaccine_name = fields.Str(required=True)  
+    manufacturer = fields.Str()  
+    side_effects = fields.Str()  
+    recommended_age_group = fields.Str() 
     
 class UserSchema(Schema):
     id = fields.Int(dump_only=True)
