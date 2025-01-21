@@ -34,7 +34,8 @@ class VaccineSchema(Schema):
     manufacturer = fields.Str()  
     side_effects = fields.Str()  
     recommended_age_group = fields.Str() 
-    
+    demand_start_date = fields.Date(required=True) 
+    demand_end_date = fields.Date(required=True) 
 class UserSchema(Schema):
     id = fields.Int(dump_only=True)
     username = fields.Str(required=True)

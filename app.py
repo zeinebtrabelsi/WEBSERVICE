@@ -8,6 +8,8 @@ from ressources.user import blp as UserBlueprint
 from db import db
 from flask_jwt_extended import JWTManager
 from blocklist import BLOCKLIST
+from flask_mail import Mail , Message 
+from flask_migrate import Migrate
 
 
 app = Flask(__name__)
@@ -22,6 +24,14 @@ app.config["OPENAPI_SWAGGER_UI_PATH"] = "/swagger-ui"
 app.config["OPENAPI_SWAGGER_UI_URL"] = "https://cdn.jsdelivr.net/npm/swagger-ui-dist/"
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///vaccinedata.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+app.config["MAIL_SERVER"] = "smtp.office365.com"
+app.config["MAIL_PORT"] = 587
+app.config["MAIL_USERNAME"] = "trabelsizeineb@tbs.u-tunis.tn"
+app.config["MAIL_PASSWORD"] = "Zeineb0107"
+app.config["MAIL_USE_TLS"] = True
+app.config["MAIL_USE_SSL"] = False
+migrate = Migrate(app, db)
+mail = Mail(app)
 db.init_app(app)
 api = Api(app)
 app.config["JWT_SECRET_KEY"] = "0107"
